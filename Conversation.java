@@ -46,6 +46,7 @@ class Conversation implements ConversationRequirements {
     System.out.println("See ya!");
     this.transcript.add("See ya!");
     input.close();
+    this.printTranscript();
   }
 
   /**
@@ -242,6 +243,5 @@ class Conversation implements ConversationRequirements {
 
     Conversation myConversation = new Conversation();
     myConversation.chat();
-    myConversation.printTranscript();
   }
 }
