@@ -1,0 +1,1 @@
+I moved printTranscript() from main to the end of chat, so that it automatically prints when a conversation finishes.
