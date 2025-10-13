@@ -1,1 +1,3 @@
-I moved printTranscript() from main to the end of chat, so that it automatically prints when a conversation finishes.
+Resubmit 1: I moved printTranscript() from main to the end of chat, so that it automatically prints when a conversation finishes.
+
+Resubmit 2: I put all the else and else ifs next to the final bracket of the ifs, and moved the header comments beneath to accomodate for that. I also filled out the rubric again. 

@@ -94,122 +94,98 @@ class Conversation implements ConversationRequirements {
     boolean mirror = false;
     for (int i = 0; i < inputString.length(); i++){
       for (int j = i; j <= inputString.length(); j++){
-        // Check for keywords I and me, change them to you
         if ((inputString.substring(i, j).equalsIgnoreCase("I") || inputString.substring (i, j).equalsIgnoreCase("me")) && isAWord(inputString, i, j)){
-          // if keyword is at the beginning of the entire string, capitalize the response
+          // Check for keywords I and me, change them to you
           if (i == 0 || (i == 1 && inputString.substring(0,1).equals(" "))){
+            // if keyword is at the beginning of the entire string, capitalize the response
             inputString = "You" + inputString.substring(j);
-          }
-          // if keyword is at the beginning of a sentence, capitalize the response
-          else if (afterPunctuation(inputString, i, j)){
+          } else if (afterPunctuation(inputString, i, j)){ 
+            // if keyword is at the beginning of a sentence, capitalize the response
             inputString = inputString.substring(0,i) + "You" + inputString.substring(j);
-          }
-          // if it's not at the beginning of a sentence, don't capitalize the response
-          else{
+          } else { 
+            // if it's not at the beginning of a sentence, don't capitalize the response
             inputString = inputString.substring(0,i) + "you" + inputString.substring(j);
           }
           mirror = true; // this is used later to determine if a question mark should be added, as they are only added to mirrored responses
           i = i + 3; // this skips past the mirrorered word so it isn't remirrored back to its original state
           j = i; //this makes sure j is always ahead of i
-        }
-
-        // Check for keyword am, change to are
-        else if (inputString.substring(i,j).equalsIgnoreCase("am") && isAWord(inputString, i, j)){
+        } else if (inputString.substring(i,j).equalsIgnoreCase("am") && isAWord(inputString, i, j)){ 
+          // Check for keyword am, change to are
           if (i == 0 || (i == 1 && inputString.substring(0,1).equals(" "))){
             inputString = "Are" + inputString.substring(j);
-          }
-          else if (afterPunctuation(inputString, i, j)){
+          } else if (afterPunctuation(inputString, i, j)){
             inputString = inputString.substring(0,i) + "Are" + inputString.substring(j);
-          }
-          else{
+          } else {
             inputString = inputString.substring(0,i) + "are" + inputString.substring(j);
           }
           mirror = true; 
           i = i + 3;
           j = i;
-        }
-        // Check for keyword my, change to your
-        else if (inputString.substring(i, j).equalsIgnoreCase("my") && isAWord(inputString, i, j)){
+        } else if (inputString.substring(i, j).equalsIgnoreCase("my") && isAWord(inputString, i, j)){ 
+          // Check for keyword my, change to your
           if (i == 0 || (i == 1 && inputString.substring(0,1).equals(" "))){
             inputString = "Your" + inputString.substring(j);
-          }
-          else if (afterPunctuation(inputString, i, j)){
+          } else if (afterPunctuation(inputString, i, j)){
             inputString = inputString.substring(0,i) + "Your" + inputString.substring(j);
-          }
-          else{
+          } else {
             inputString = inputString.substring(0,i) + "your" + inputString.substring(j);
           }
           mirror = true;
           i = i + 4;
           j = i;
-        }
-        // Check for keyword you, change to I
-        else if (inputString.substring(i, j).equalsIgnoreCase("you") && isAWord(inputString, i, j)){
+        } else if (inputString.substring(i, j).equalsIgnoreCase("you") && isAWord(inputString, i, j)){ 
+          // Check for keyword you, change to I or me depending on context
           if (i == 0){
             inputString = "I" + inputString.substring(j);
-          }
-          // Check if "you" is preceded by "to ", "at ", "towards ", "with ", "for ", "without ", change to "me"
-          else if ((i > 3 && inputString.substring(i-3, i).equals("at ")) || (i > 4 && inputString.substring(i-4, i).equals("for ")) || (i > 3 && inputString.substring(i-3, i).equalsIgnoreCase("to ")) || (i > 8 && inputString.substring(i-8, i).equalsIgnoreCase("towards ")) || (i > 5 && inputString.substring(i-5, i).equalsIgnoreCase("with ")) || (i > 8 && inputString.substring(i-8, i).equalsIgnoreCase("without "))){
+          } else if ((i > 3 && inputString.substring(i-3, i).equals("at ")) || (i > 4 && inputString.substring(i-4, i).equals("for ")) || (i > 3 && inputString.substring(i-3, i).equalsIgnoreCase("to ")) || (i > 8 && inputString.substring(i-8, i).equalsIgnoreCase("towards ")) || (i > 5 && inputString.substring(i-5, i).equalsIgnoreCase("with ")) || (i > 8 && inputString.substring(i-8, i).equalsIgnoreCase("without "))){ // Check if "you" is preceded by "to ", "at ", "towards ", "with ", "for ", "without ", change to "me"
             inputString = inputString.substring(0,i) + "me" + inputString.substring(j);
-          }
-          else{
+          } else{
             inputString = inputString.substring(0,i) + "I" + inputString.substring(j);
           }
           mirror = true;
           i = i + 1;
           j = i;
-        }
-        // Check for keyword are, change to am
-        else if (inputString.substring(i, j).equalsIgnoreCase("are") && isAWord(inputString, i, j)){
+        } else if (inputString.substring(i, j).equalsIgnoreCase("are") && isAWord(inputString, i, j)){ 
+          // Check for keyword are, change to am
           if (i == 0 || (i == 1 && inputString.substring(0,1).equals(" "))){
             inputString = "Am" + inputString.substring(j);
-          }
-          else if (afterPunctuation(inputString, i, j)){
+          } else if (afterPunctuation(inputString, i, j)){
             inputString = inputString.substring(0,i) + "Am" + inputString.substring(j);
-          }
-          else{
+          } else {
             inputString = inputString.substring(0,i) + "am" + inputString.substring(j);
           }
           mirror = true;
           i = i + 2;
           j = i;
-        }
-        // Check for keyword your, change to my
-        else if (inputString.substring(i, j).equalsIgnoreCase("your") && isAWord(inputString, i, j)){
+        } else if (inputString.substring(i, j).equalsIgnoreCase("your") && isAWord(inputString, i, j)){ 
+          // Check for keyword your, change to my
           if (i == 0 || (i == 1 && inputString.substring(0,1).equals(" "))){
             inputString = "My" + inputString.substring(j);
-          }
-          else if (afterPunctuation(inputString, i, j)){
+          } else if (afterPunctuation(inputString, i, j)){
             inputString = inputString.substring(0,i) + "My" + inputString.substring(j);
-          }
-          else{
+          } else {
             inputString = inputString.substring(0,i) + "my" + inputString.substring(j);
           }
           mirror = true;
           i = i + 2;
           j = i;
-        }
-        // Check for keyword I'm, change to You're
-        else if (inputString.substring(i,j).equalsIgnoreCase("I'm") && isAWord(inputString, i, j)){
+        } else if (inputString.substring(i,j).equalsIgnoreCase("I'm") && isAWord(inputString, i, j)){ 
+          // Check for keyword I'm, change to You're
           if (i == 0 || (i == 1 && inputString.substring(0,1).equals(" "))){
             inputString = "You're" + inputString.substring(j);
-          }
-          else if (afterPunctuation(inputString, i, j)){
+          } else if (afterPunctuation(inputString, i, j)){
             inputString = inputString.substring(0,i) + "You're" + inputString.substring(j);
-          }
-          else{
+          } else{
             inputString = inputString.substring(0,i) + "you're" + inputString.substring(j);
           }
           mirror = true;
           i = i + 6;
           j = i;
-        }
-        // Check for keyword you're, change to I'm
-        else if (inputString.substring(i,j).equalsIgnoreCase("you're") && isAWord(inputString, i, j)){
+        } else if (inputString.substring(i,j).equalsIgnoreCase("you're") && isAWord(inputString, i, j)){
+          // Check for keyword you're, change to I'm
           if (i == 0){
             inputString = "I'm" + inputString.substring(j);
-          }
-          else{
+          } else {
             inputString = inputString.substring(0,i) + "I'm" + inputString.substring(j);
           }
           mirror = true;
@@ -218,9 +194,8 @@ class Conversation implements ConversationRequirements {
         }      
       }
     }
-
-    // If a mirroring was done, ensure the response ends in a question mark, and any sentences within it end in a question mark
     if (mirror){
+      // If a mirroring was done, ensure the response ends in a question mark, and any sentences within it end in a question mark
       if (inputString.contains(".")){
         inputString = inputString.replace(".", "?");
       }
@@ -230,9 +205,8 @@ class Conversation implements ConversationRequirements {
       if (!inputString.contains("?")){
         inputString += "?";
       }
-    }
-    // If no mirroring was done, give a random canned response
-    else{
+    } else {
+      // If no mirroring was done, give a random canned response
       int randomIndex = (int)(Math.random() * this.cannedResponses.length);
       inputString = this.cannedResponses[randomIndex];
     }
